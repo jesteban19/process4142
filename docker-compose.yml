@@ -1,0 +1,16 @@
+version: '2'
+services:
+    web:
+        build: .
+        command:
+            - /bin/sh
+            - -c
+            - |
+                rm -rF db.sqlite3
+                ./manage.py migrate
+                ./manage.py loaddata data_init.json
+                ./manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./shop_book:/code
+        ports:
+            - "8000:8000"
